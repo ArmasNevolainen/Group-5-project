@@ -33,7 +33,7 @@ function AddItemModal({ show, onHide, userId, onToolAdded }) {
   const createTool = async (formData) => {
     try {
       const response = await fetch(
-        "https://group-5-project-1.onrender.com/api/tools",
+        "https://group-5-project-2.onrender.com/api/tools",
         {
           method: "POST",
           body: formData, // Send form data in the request body

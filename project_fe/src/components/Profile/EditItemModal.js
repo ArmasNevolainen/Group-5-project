@@ -44,7 +44,7 @@ function EditItemModal({ show, onHide, tool, onToolUpdated }) {
   const updateTool = async (toolId, formData) => {
     try {
       const response = await fetch(
-        `https://group-5-project-1.onrender.com/api/tools/${toolId}`,
+        `https://group-5-project-2.onrender.com/api/tools/${toolId}`,
         {
           method: "PATCH",
           body: formData, // Send form data in the request body

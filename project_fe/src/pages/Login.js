@@ -14,7 +14,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://group-5-project-1.onrender.com/api/users/login",
+        "https://group-5-project-2.onrender.com/api/users/login",
         {
           method: "POST",
           headers: {

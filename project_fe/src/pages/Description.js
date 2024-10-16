@@ -16,7 +16,7 @@ function Description() {
 
       try {
         const userResponse = await fetch(
-          `https://group-5-project-1.onrender.com/api/users/${userId}`,
+          `https://group-5-project-2.onrender.com/api/users/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ function Description() {
         }
 
         const toolResponse = await fetch(
-          `https://group-5-project-1.onrender.com/api/tools/${id}?includeOwner=true`
+          `https://group-5-project-2.onrender.com/api/tools/${id}?includeOwner=true`
         );
         if (!toolResponse.ok) {
           throw new Error("Tool not found");
@@ -78,7 +78,7 @@ function Description() {
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-2xl font-semibold mb-4">Tool Information</h2>
             <img
-              src={`https://group-5-project-1.onrender.com/public/${tool.imageUrl}`}
+              src={`https://group-5-project-2.onrender.com/public/${tool.imageUrl}`}
               alt={tool.name}
               className="w-full h-auto object-cover mb-4 rounded-lg"
             />

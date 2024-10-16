@@ -33,7 +33,7 @@ function ToolsCard({ tool, onDelete, onEdit, onShare }) {
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
       <div className="h-48 flex items-center justify-center">
         <img
-          src={`https://group-5-project-1.onrender.com/public/${tool.imageUrl}`}
+          src={`https://group-5-project-2.onrender.com/public/${tool.imageUrl}`}
           alt={tool.name}
           className="max-w-full max-h-full object-contain"
         />

@@ -22,7 +22,7 @@ function Profile() {
         const userId = localStorage.getItem("userId");
 
         const response = await fetch(
-          `https://group-5-project-1.onrender.com/api/users/${userId}`,
+          `https://group-5-project-2.onrender.com/api/users/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -53,7 +53,7 @@ function Profile() {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          `https://group-5-project-1.onrender.com/api/tools/user-tools?userId=${userData._id}`,
+          `https://group-5-project-2.onrender.com/api/tools/user-tools?userId=${userData._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -82,7 +82,7 @@ function Profile() {
 
     try {
       const response = await fetch(
-        `https://group-5-project-1.onrender.com/api/tools/${toolId}/availability`,
+        `https://group-5-project-2.onrender.com/api/tools/${toolId}/availability`,
         {
           method: "PATCH",
           headers: {
@@ -120,7 +120,7 @@ function Profile() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `https://group-5-project-1.onrender.com/api/tools/${toolId}`,
+        `https://group-5-project-2.onrender.com/api/tools/${toolId}`,
         {
           method: "DELETE",
           headers: {

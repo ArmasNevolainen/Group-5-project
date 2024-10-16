@@ -15,7 +15,7 @@ function UserProfile({ userData }) {
       <div className="p-4">
         <img
           src={
-            `https://group-5-project-1.onrender.com/public/${userData.imageUrl}` ||
+            `https://group-5-project-2.onrender.com/public/${userData.imageUrl}` ||
             defaultProfilePic
           }
           alt="Profile"

@@ -14,7 +14,7 @@ const Available = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://group-5-project-1.onrender.com/api/tools"
+          "https://group-5-project-2.onrender.com/api/tools"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -59,7 +59,7 @@ const Available = () => {
               <div className="h-48 bg-gray-200 flex items-center justify-center">
                 {tool.name && (
                   <img
-                    src={`https://group-5-project-1.onrender.com/public/${tool.imageUrl}`}
+                    src={`https://group-5-project-2.onrender.com/public/${tool.imageUrl}`}
                     alt={tool.name}
                     className="max-h-full max-w-full object-cover"
                   />

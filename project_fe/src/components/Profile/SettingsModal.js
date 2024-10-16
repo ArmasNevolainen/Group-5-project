@@ -27,7 +27,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
       const fetchUserData = async () => {
         try {
           const response = await fetch(
-            `https://group-5-project-1.onrender.com/api/users/${userId}`,
+            `https://group-5-project-2.onrender.com/api/users/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
 
     try {
       const response = await fetch(
-        `https://group-5-project-1.onrender.com/api/users/${userData._id}`,
+        `https://group-5-project-2.onrender.com/api/users/${userData._id}`,
         {
           method: "PATCH",
           headers: {
@@ -120,7 +120,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
 
     try {
       const response = await fetch(
-        `https://group-5-project-1.onrender.com/api/users/${userData._id}/change-password`,
+        `https://group-5-project-2.onrender.com/api/users/${userData._id}/change-password`,
         {
           method: "PATCH",
           headers: {
@@ -184,7 +184,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
                     src={
                       userData.imageFile
                         ? URL.createObjectURL(userData.imageFile)
-                        : `https://group-5-project-1.onrender.com/public/${userData.imageUrl}`
+                        : `https://group-5-project-2.onrender.com/public/${userData.imageUrl}`
                     }
                     alt="Profile"
                     className="w-full h-full object-cover"
