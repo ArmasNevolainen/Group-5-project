@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import "./Settings.css";
 
 const Settings = () => {
   const [userData, setUserData] = useState({
@@ -54,14 +52,12 @@ const Settings = () => {
     e.preventDefault();
     const formData = new FormData();
 
-    // Append user data to formData
     Object.keys(userData).forEach((key) => {
       if (key !== "imageFile" && key !== "sharedTools") {
         formData.append(key, userData[key]);
       }
     });
 
-    // Append image file if it exists
     if (userData.imageFile) {
       formData.append("image", userData.imageFile);
     }
@@ -150,130 +146,181 @@ const Settings = () => {
   };
 
   return (
-    <Container fluid className="settings-page">
-      <Row className="justify-content-center align-items-center">
-        <Col md={8} className="form-container">
-          <h1 className="heading mb-4">Settings</h1>
+    <div className="bg-gray-100 min-h-screen py-12">
+      <div className="max-w-3xl mx-auto px-4">
+        <div className="bg-white shadow-lg rounded-lg p-8 md:p-12">
+          <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
+            Settings
+          </h1>
 
-          <div className="profile-picture-row">
-            <div className="profile-picture-container">
-              <div className="profile-picture">
-                {userData.imageUrl ? (
-                  <img
-                    src={`https://group-5-project-1.onrender.com/public/${userData.imageUrl}`}
-                    alt="Profile"
-                    className="profile-image"
-                  />
-                ) : (
-                  "150 × 150"
-                )}
-              </div>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="choose-file-btn"
-              />
+          <div className="mb-8 flex flex-col items-center">
+            <div className="w-32 h-32 bg-gray-200 rounded-full overflow-hidden">
+              {userData.imageUrl ? (
+                <img
+                  src={`https://group-5-project-1.onrender.com/public/${userData.imageUrl}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-500">
+                  150 × 150
+                </div>
+              )}
             </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mt-4 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
           </div>
 
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="firstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div>
+              <label
+                htmlFor="firstName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                First Name
+              </label>
+              <input
                 type="text"
-                placeholder="Enter your first name"
+                id="firstName"
                 value={userData.firstName}
                 onChange={(e) =>
                   setUserData({ ...userData, firstName: e.target.value })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-            <Form.Group controlId="lastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
+            </div>
+            <div>
+              <label
+                htmlFor="lastName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Last Name
+              </label>
+              <input
                 type="text"
-                placeholder="Enter your last name"
+                id="lastName"
                 value={userData.lastName}
                 onChange={(e) =>
                   setUserData({ ...userData, lastName: e.target.value })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-            <Form.Group controlId="address">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
+            </div>
+            <div>
+              <label
+                htmlFor="streetName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Address
+              </label>
+              <input
                 type="text"
-                placeholder="Enter your address"
+                id="streetName"
                 value={userData.streetName}
                 onChange={(e) =>
                   setUserData({ ...userData, streetName: e.target.value })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-            <Form.Group controlId="city">
-              <Form.Label>City</Form.Label>
-              <Form.Control
+            </div>
+            <div>
+              <label
+                htmlFor="city"
+                className="block text-sm font-medium text-gray-700"
+              >
+                City
+              </label>
+              <input
                 type="text"
-                placeholder="Enter your city"
+                id="city"
                 value={userData.city}
                 onChange={(e) =>
                   setUserData({ ...userData, city: e.target.value })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-            <Form.Group controlId="postalCode">
-              <Form.Label>Postal Code</Form.Label>
-              <Form.Control
+            </div>
+            <div>
+              <label
+                htmlFor="postalCode"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Postal Code
+              </label>
+              <input
                 type="text"
-                placeholder="Enter your postal code"
+                id="postalCode"
                 value={userData.postalCode}
                 onChange={(e) =>
                   setUserData({ ...userData, postalCode: e.target.value })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-            <Form.Group controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
                 type="email"
-                placeholder="Enter your email"
+                id="email"
                 value={userData.email}
                 onChange={(e) =>
                   setUserData({ ...userData, email: e.target.value })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-            <Button variant="primary" type="submit">
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
               Update Profile
-            </Button>
-            {message && <p className="message">{message}</p>}{" "}
-            {/* Message moved here */}
-          </Form>
+            </button>
+          </form>
 
-          <Form onSubmit={handleChangePassword} className="mt-4">
-            <Row className="mb-3">
-              <Col md={12}>
-                <h5>Change Password</h5>
-              </Col>
-            </Row>
-            <Form.Group controlId="password">
-              <Form.Label>Current Password</Form.Label>
-              <Form.Control
+          {message && (
+            <p className="mt-4 text-center text-sm text-green-600">{message}</p>
+          )}
+
+          <form onSubmit={handleChangePassword} className="mt-16 space-y-8">
+            <h2 className="text-xl font-semibold text-gray-800">
+              Change Password
+            </h2>
+            <div>
+              <label
+                htmlFor="currentPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Current Password
+              </label>
+              <input
                 type="password"
-                placeholder="Enter your current password"
+                id="currentPassword"
                 value={passwordData.password}
                 onChange={(e) =>
                   setPasswordData({ ...passwordData, password: e.target.value })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-
-            <Form.Group controlId="newPassword">
-              <Form.Label>New Password</Form.Label>
-              <Form.Control
+            </div>
+            <div>
+              <label
+                htmlFor="newPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                New Password
+              </label>
+              <input
                 type="password"
-                placeholder="Enter your new password"
+                id="newPassword"
                 value={passwordData.newPassword}
                 onChange={(e) =>
                   setPasswordData({
@@ -281,14 +328,19 @@ const Settings = () => {
                     newPassword: e.target.value,
                   })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-
-            <Form.Group controlId="confirmPassword">
-              <Form.Label>Confirm New Password</Form.Label>
-              <Form.Control
+            </div>
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm New Password
+              </label>
+              <input
                 type="password"
-                placeholder="Confirm your new password"
+                id="confirmPassword"
                 value={passwordData.confirmPassword}
                 onChange={(e) =>
                   setPasswordData({
@@ -296,16 +348,19 @@ const Settings = () => {
                     confirmPassword: e.target.value,
                   })
                 }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
               Change Password
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

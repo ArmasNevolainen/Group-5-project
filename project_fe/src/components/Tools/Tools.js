@@ -1,86 +1,75 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card } from "react-bootstrap";
 
 function ToolsCard({ tool, onDelete, onEdit, onShare }) {
-  const [confirmDelete, setConfirmDelete] = useState(false); // State to confirm delete action
-  const [timer, setTimer] = useState(null); // Timer to reset delete confirmation
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [timer, setTimer] = useState(null);
 
-  // Handle delete button click
   const handleDeleteClick = () => {
     if (confirmDelete) {
-      onDelete(); // Proceed with delete if confirmed
+      onDelete();
     } else {
-      setConfirmDelete(true); // Set delete confirmation state
+      setConfirmDelete(true);
       const newTimer = setTimeout(() => {
         setConfirmDelete(false);
       }, 3000);
-      setTimer(newTimer); // Store timer to clear later if needed
+      setTimer(newTimer);
     }
   };
 
-  // Clean up timer on component unmount
   useEffect(() => {
     return () => {
       if (timer) {
-        clearTimeout(timer); // Clear timer to avoid memory leaks
+        clearTimeout(timer);
       }
     };
   }, [timer]);
 
-  // Redirect to home if the user is not authenticated
   const token = localStorage.getItem("token");
   if (!token) {
     window.location.href = "/";
   }
 
   return (
-    <Card>
-      <div className="tool-image-container">
-        {/* Display tool image */}
-        <Card.Img
-          variant="top"
+    <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="h-48 flex items-center justify-center">
+        <img
           src={`https://group-5-project-1.onrender.com/public/${tool.imageUrl}`}
           alt={tool.name}
-          className="tool-image"
+          className="max-w-full max-h-full object-contain"
         />
       </div>
-      <Card.Body>
-        {/* Display tool name, description, and details */}
-        <Card.Title>{tool.name}</Card.Title>
-        <Card.Text>{tool.description}</Card.Text>
-        <Card.Text>{tool.details}</Card.Text>
-        <div className="button-container d-flex flex-wrap justify-content-between">
-          {/* Edit button if the edit function is provided */}
+      <div className="p-4">
+        <h2 className="text-xl font-semibold mb-2">{tool.name}</h2>
+        <p className="text-gray-600 mb-2">{tool.description}</p>
+        <p className="text-gray-600 mb-4">{tool.details}</p>
+        <div className="flex flex-wrap gap-2">
           {onEdit && (
-            <Button
+            <button
               onClick={onEdit}
-              className="edit-button mb-2 flex-grow-1 mx-1"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex-grow focus:outline-none focus:shadow-outline shadow-md transform transition duration-200 hover:translate-y-0.5"
             >
               Edit
-            </Button>
+            </button>
           )}
-          {/* Delete button with confirmation */}
-
           {onDelete && (
-            <Button
+            <button
               onClick={handleDeleteClick}
-              className={`delete-button mb-2 flex-grow-1 mx-1 ${
-                confirmDelete ? "confirm-state" : ""
-              }`}
+              className={`${
+                confirmDelete ? "bg-red-600" : "bg-red-500"
+              } hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex-grow focus:outline-none focus:shadow-outline shadow-md transform transition duration-200 hover:translate-y-0.5`}
             >
               {confirmDelete ? "I'm sure!" : "Delete"}
-            </Button>
+            </button>
           )}
-          {/* Share button to toggle sharing/returning */}
-          <Button
+          <button
             onClick={() => onShare(tool._id)}
-            className="mb-2 flex-grow-1 mx-1"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex-grow focus:outline-none focus:shadow-outline shadow-md transform transition duration-200 hover:translate-y-0.5"
           >
             {tool.available ? "Mark as Lent" : "Mark as Returned"}
-          </Button>
+          </button>
         </div>
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 }
 

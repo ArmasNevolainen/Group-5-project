@@ -1,49 +1,49 @@
 import React from "react";
-import { Card, Image } from "react-bootstrap";
-import "./Profile.css";
 import defaultProfilePic from "./PP.jpg";
 
 function UserProfile({ userData }) {
   const token = localStorage.getItem("token");
 
-  // Redirect to home if the user is not authenticated
   if (!token) {
     window.location.href = "/";
   }
 
-  // Show loading message if user data is not available
-  if (!userData) return <div>Loading...</div>;
+  if (!userData) return <div className="text-center">Loading...</div>;
 
   return (
-    <div className="profileContainer">
-      <Card className="profileCard">
-        {/* Display user profile image or a default image */}
-        <Image
-          variant="top"
+    <div className="w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="p-4">
+        <img
           src={
             `https://group-5-project-1.onrender.com/public/${userData.imageUrl}` ||
             defaultProfilePic
           }
-          className="profileImage mb-3"
+          alt="Profile"
+          className="w-full h-full object-cover"
         />
-        <Card.Body>
-          {/* Display user information */}
-          <Card.Title>
-            {userData.firstName} {userData.lastName}
-          </Card.Title>
-          <Card.Text>
-            <b>City:</b> {userData.city}
-            <br />
-            <b>Street:</b> {userData.streetName}
-            <br />
-            <b>Postal Code: </b> {userData.postalCode}
-            <br />
-            <b>Email: </b> {userData.email}
-            <br />
-            <b>Phone: </b> {userData.phone || "N/A"}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
+          {userData.firstName} {userData.lastName}
+        </h2>
+        <div className="text-gray-600">
+          <p className="mb-1">
+            <span className="font-semibold">City:</span> {userData.city}
+          </p>
+          <p className="mb-1">
+            <span className="font-semibold">Street:</span> {userData.streetName}
+          </p>
+          <p className="mb-1">
+            <span className="font-semibold">Postal Code:</span>{" "}
+            {userData.postalCode}
+          </p>
+          <p className="mb-1">
+            <span className="font-semibold">Email:</span> {userData.email}
+          </p>
+          <p className="mb-1">
+            <span className="font-semibold">Phone:</span>{" "}
+            {userData.phone || "N/A"}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

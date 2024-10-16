@@ -1,15 +1,11 @@
-// Completed code
-
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import "./Profile.css";
-import UserProfile from "./UserProfile";
-import ToolsCard from "../Tools/Tools";
-import AddItemModal from "./AddItemModal";
-import EditItemModal from "./EditItemModal";
+import UserProfile from "../components/Profile/UserProfile";
+import ToolsCard from "../components/Tools/Tools";
+import AddItemModal from "../components/Profile/AddItemModal";
+import EditItemModal from "../components/Profile/EditItemModal";
+import SettingsModal from "../components/Profile/SettingsModal";
 
 function Profile() {
-  // State variables for user data, tools, modals, and error handling
   const [userData, setUserData] = useState(null);
   const [sharedTools, setSharedTools] = useState([]);
   const [borrowedTools, setBorrowedTools] = useState([]);
@@ -17,8 +13,8 @@ function Profile() {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentTool, setCurrentTool] = useState(null);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
-  // Fetch user data on component mount
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -39,17 +35,16 @@ function Profile() {
         }
 
         const userJson = await response.json();
-        setUserData(userJson); // Set the user data
+        setUserData(userJson);
       } catch (error) {
         console.error("Error fetching user data", error);
-        setError(error.message); // Handle any errors
+        setError(error.message);
       }
     };
 
-    fetchUserData(); // Trigger data fetching on component mount
+    fetchUserData();
   }, []);
 
-  // Fetch tools after user data is loaded
   useEffect(() => {
     if (!userData) return;
 
@@ -71,18 +66,17 @@ function Profile() {
         }
 
         const { availableTools, borrowedTools } = await response.json();
-        setSharedTools(availableTools); // Set shared tools
-        setBorrowedTools(borrowedTools); // Set borrowed tools
+        setSharedTools(availableTools);
+        setBorrowedTools(borrowedTools);
       } catch (error) {
         console.error("Error fetching tools", error);
-        setError(error.message); // Handle any errors
+        setError(error.message);
       }
     };
 
-    fetchTools(); // Fetch tools after user data is available
+    fetchTools();
   }, [userData]);
 
-  // Handle tool availability toggling
   const handleShare = async (toolId) => {
     const token = localStorage.getItem("token");
 
@@ -106,7 +100,6 @@ function Profile() {
 
       const updatedTool = await response.json();
 
-      // Update the shared and borrowed tool lists based on availability
       if (updatedTool.tool.available) {
         setBorrowedTools((prevTools) =>
           prevTools.filter((tool) => tool._id !== updatedTool.tool._id)
@@ -123,7 +116,6 @@ function Profile() {
     }
   };
 
-  // Handle tool deletion
   const handleDelete = async (toolId) => {
     try {
       const token = localStorage.getItem("token");
@@ -137,7 +129,7 @@ function Profile() {
         }
       );
       if (response.ok) {
-        setSharedTools(sharedTools.filter((tool) => tool._id !== toolId)); // Remove deleted tool from shared tools list
+        setSharedTools(sharedTools.filter((tool) => tool._id !== toolId));
       } else {
         throw new Error("Failed to delete tool");
       }
@@ -146,98 +138,88 @@ function Profile() {
     }
   };
 
-  // Handle adding a new tool
   const handleToolAdded = (newTool) => {
-    setSharedTools((prevTools) => [...prevTools, newTool]); // Add new tool to shared tools list
+    setSharedTools((prevTools) => [...prevTools, newTool]);
   };
 
-  // Handle editing a tool
   const handleEditClick = (tool) => {
-    setCurrentTool(tool); // Set the tool to be edited
-    setShowEditModal(true); // Open the edit modal
+    setCurrentTool(tool);
+    setShowEditModal(true);
   };
 
-  // Handle updating a tool
   const handleToolUpdated = (updatedTool) => {
     setSharedTools((prevTools) =>
       prevTools.map((tool) =>
         tool._id === updatedTool._id ? updatedTool : tool
       )
-    ); // Update the shared tools list with the updated tool
+    );
   };
 
   return (
-    <div>
-      {error && <p>Error: {error}</p>} {/* Display error message if any */}
-      <Container fluid>
-        <Row>
-          <Col md={4} lg={3} className="mb-4">
-            {userData ? (
-              <div className="d-flex flex-column align-items-center">
-                <UserProfile userData={userData} className="mb-3" />{" "}
-                {/* Display user profile */}
-              </div>
-            ) : (
-              <div>Loading user data...</div>
-            )}
-          </Col>
+    <div className="container mx-auto px-4">
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+      <div className="flex flex-wrap -mx-4">
+        <div className="w-full md:w-1/3 px-4 my-3 mb-4 ">
+          {userData ? (
+            <div className="flex flex-col items-center">
+              <UserProfile userData={userData} className="mb-3" />
+              <button
+                onClick={() => setShowModal(true)}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-3 mb-4 focus:outline-none focus:shadow-outline shadow-md transform transition duration-200 hover:translate-y-0.5"
+              >
+                Add Item
+              </button>
+              <button
+                onClick={() => setIsSettingsModalOpen(true)}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3 focus:outline-none focus:shadow-outline shadow-md transform transition duration-200 hover:translate-y-0.5"
+              >
+                Settings
+              </button>
+            </div>
+          ) : (
+            <div className="text-center">Loading user data...</div>
+          )}
+        </div>
 
-          <Col md={8} lg={9}>
-            {/* Button to add a new item */}
-            <Button
-              onClick={() => setShowModal(true)}
-              className="btn btn-success mt-3"
-            >
-              Add Item
-            </Button>
-            {/* Conditional rendering for tools display */}
-            {sharedTools.length === 0 && borrowedTools.length === 0 ? (
-              <div className="no-tools-message">
-                <h1 className="profile-headertext">
-                  Welcome to GearShare! You haven't shared any items yet.
-                  <br />
-                  You can borrow items from others when you're ready to lend out
-                  your own. Add an item to get started!
-                </h1>
+        <div className="w-full md:w-2/3 px-4">
+          {sharedTools.length === 0 && borrowedTools.length === 0 ? (
+            <div className="text-center">
+              <h1 className="text-2xl mb-4">
+                Welcome to GearShare! You haven't shared any items yet.
+              </h1>
+              <p>
+                You can borrow items from others when you're ready to lend out
+                your own. Add an item to get started!
+              </p>
+            </div>
+          ) : (
+            <>
+              <h1 className="text-2xl mb-4">Available for Sharing:</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {sharedTools.map((tool) => (
+                  <ToolsCard
+                    key={tool._id}
+                    tool={tool}
+                    onDelete={() => handleDelete(tool._id)}
+                    onEdit={() => handleEditClick(tool)}
+                    onShare={() => handleShare(tool._id)}
+                  />
+                ))}
               </div>
-            ) : (
-              <>
-                <h1>Available for Sharing:</h1>
-                {/* Display shared tools */}
-                {sharedTools.length > 0 && (
-                  <Row xs={1} md={2} lg={3} className="g-4">
-                    {sharedTools.map((tool) => (
-                      <Col key={tool._id}>
-                        <ToolsCard
-                          tool={tool}
-                          onDelete={() => handleDelete(tool._id)} // Delete tool
-                          onEdit={() => handleEditClick(tool)} // Edit tool
-                          onShare={() => handleShare(tool._id)} // Share tool
-                        />
-                      </Col>
-                    ))}
-                  </Row>
-                )}
-                <h1>Currently Lent:</h1>
-                {/* Display borrowed tools */}
-                {borrowedTools.length > 0 && (
-                  <Row xs={1} md={2} lg={3} className="g-4">
-                    {borrowedTools.map((tool) => (
-                      <Col key={tool._id}>
-                        <ToolsCard
-                          tool={tool}
-                          onShare={() => handleShare(tool._id)} // Share tool
-                        />
-                      </Col>
-                    ))}
-                  </Row>
-                )}
-              </>
-            )}
-          </Col>
-        </Row>
-      </Container>
-      {/* Modals for adding and editing tools */}
+              <h1 className="text-2xl my-4">Currently Lent:</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {borrowedTools.map((tool) => (
+                  <ToolsCard
+                    key={tool._id}
+                    tool={tool}
+                    onShare={() => handleShare(tool._id)}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
       <AddItemModal
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -249,6 +231,10 @@ function Profile() {
         onHide={() => setShowEditModal(false)}
         tool={currentTool}
         onToolUpdated={handleToolUpdated}
+      />
+      <SettingsModal
+        isOpen={isSettingsModalOpen}
+        onClose={() => setIsSettingsModalOpen(false)}
       />
     </div>
   );

@@ -2,41 +2,31 @@ import React from "react";
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const pageNumbers = [];
-  
+
   // Generate an array of page numbers based on totalPages
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
   return (
-    <div className="pagination">
-      {/* Previous button: moves to the previous page, disabled if on the first page */}
-      <button
-        onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
-        disabled={currentPage === 1}
-      >
-        Previous
-      </button>
-
-      {/* Render the page numbers */}
-      {pageNumbers.map((number) => (
-        <button
-          key={number}
-          onClick={() => onPageChange(number)}
-          className={currentPage === number ? "active" : ""} // Highlight the active page
-        >
-          {number}
-        </button>
-      ))}
-
-      {/* Next button: moves to the next page, disabled if on the last page */}
-      <button
-        onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
-        disabled={currentPage === totalPages}
-      >
-        Next
-      </button>
-    </div>
+    <nav>
+      <ul className="flex list-none">
+        {pageNumbers.map((number) => (
+          <li key={number} className="mx-1">
+            <button
+              onClick={() => onPageChange(number)}
+              className={`px-3 py-2 rounded ${
+                currentPage === number
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 
