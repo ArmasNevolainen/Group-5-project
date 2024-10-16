@@ -23,10 +23,10 @@ function Home() {
               Join Now
             </Link>
           )}
-          <div className="mt-4">
+          <div className="mt-4 py-3">
             <Link
               to="/available"
-              className="inline-block bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded transition duration-300 ease-in-out"
+              className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2 focus:outline-none focus:shadow-outline shadow-md transform transition duration-200 hover:translate-y-0.5 no-underline"
             >
               Browse Available Tools
             </Link>
