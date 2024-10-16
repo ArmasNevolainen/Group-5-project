@@ -18,7 +18,7 @@ function Home() {
           {!isLoggedIn && (
             <Link
               to="/join"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded mx-2 text-lg transition duration-300 ease-in-out mb-4 no-underline"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded mx-2 text-lg focus:outline-none focus:shadow-outline shadow-md transform transition duration-200 hover:translate-y-0.5 no-underline"
             >
               Join Now
             </Link>
